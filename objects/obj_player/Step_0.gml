@@ -1,4 +1,1 @@
-controles();
-
-x += velh;
-y += velv;
+maquina_estados();
