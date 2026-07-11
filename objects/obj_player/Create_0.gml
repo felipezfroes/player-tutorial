@@ -6,13 +6,19 @@ direita     = noone;
 esquerda    = noone;
 cima        = noone;
 baixo       = noone;
+dash        = noone;
 
 dir         = 0;
+
+//DASH
+dash_dir    = -1;
+dash_veloc  = 6;
 
 enum PlayerEstados
 {
     parado,
-    andando
+    andando,
+    dash
 }
 
 estado = PlayerEstados.parado;
@@ -23,6 +29,8 @@ controles = function()
     esquerda    = keyboard_check(vk_left) or keyboard_check(ord("A"));
     cima        = keyboard_check(vk_up) or keyboard_check(ord("W"));
     baixo       = keyboard_check(vk_down) or keyboard_check(ord("S"));
+    
+    dash        = mouse_check_button_pressed(mb_right);
     
     //velh = (direita - esquerda) * vel;
     //velv = (baixo - cima) * vel;
@@ -36,6 +44,13 @@ controles = function()
     else {
         velh = 0;
         velv = 0;
+    }
+    
+    if (dash)
+    {
+        alarm[0] = 8;
+        dash_dir = point_direction(x,y, mouse_x, mouse_y);
+        estado = PlayerEstados.dash;
     }
 }
 
@@ -64,7 +79,19 @@ maquina_estados = function()
             }
             
             break;
-        }    
+        }  
+            
+        case PlayerEstados.dash:
+        {
+            velh = lengthdir_x(dash_veloc, dash_dir);
+            velv = lengthdir_y(dash_veloc, dash_dir);
+            
+            var inst = instance_create_layer(x,y, "Instances", obj_rastro);
+            inst.sprite_index = sprite_index;
+            inst.image_index = image_index;
+            inst.image_speed = 0;
+            
+        }      
     }
 }
 

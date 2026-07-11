@@ -1,1 +1,1 @@
-move_and_collide(velh, velv, all);
+move_and_collide(velh, velv, obj_colisor);
