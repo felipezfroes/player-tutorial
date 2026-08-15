@@ -40,6 +40,7 @@ controles = function()
     {
         velh = lengthdir_x(vel, dir);
         velv = lengthdir_y(vel, dir);
+        
     }
     else {
         velh = 0;
