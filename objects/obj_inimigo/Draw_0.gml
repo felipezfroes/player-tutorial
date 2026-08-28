@@ -41,3 +41,19 @@ if (player_detectado)
 
 // VOLTA A COR AO NORMAL
 draw_set_color(c_white);
+
+draw_set_halign(fa_center);
+draw_set_color(c_white);
+
+switch (estado)
+{
+    case InimigoEstados.parado:
+        draw_text(x, y - 45, "PARADO");
+    break;
+
+    case InimigoEstados.seguindo:
+        draw_text(x, y - 45, "SEGUINDO");
+    break;
+}
+
+draw_set_halign(fa_left);
