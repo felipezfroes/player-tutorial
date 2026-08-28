@@ -6,7 +6,7 @@ velv = 0;
 
 
 // DETECÇÃO
-alcance_deteccao = 96;
+alcance_deteccao = 64;
 
 player = noone;
 player_detectado = false;
