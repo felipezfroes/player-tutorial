@@ -90,6 +90,42 @@ draw_sprite_ext(
     image_alpha
 );
 
+// ==================================================
+// HIT FLASH
+// ==================================================
+
+if (timer_hit_flash > 0)
+{
+    gpu_set_blendmode(
+        bm_add
+    );
+
+
+    draw_sprite_ext(
+        sprite_index,
+        image_index,
+
+        x,
+        y - altura,
+
+        image_xscale
+            * escala_x_visual,
+
+        escala_y_visual,
+
+        image_angle,
+
+        c_white,
+
+        0.85
+    );
+
+
+    gpu_set_blendmode(
+        bm_normal
+    );
+}
+
 
 // ==================================================
 // DEBUG
@@ -229,4 +265,25 @@ if (debug_ia)
 
     draw_set_halign(fa_left);
     draw_set_color(c_white);
+    
+    draw_set_halign(
+    fa_center
+    );
+    
+    draw_set_color(
+        c_white
+    );
+    
+    draw_text(
+        x,
+        y - altura - 40,
+        "HP: "
+        + string(vida)
+        + "/"
+        + string(vida_max)
+    );
+    
+    draw_set_halign(
+        fa_left
+    );
 }

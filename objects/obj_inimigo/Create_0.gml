@@ -7,6 +7,45 @@ velv = 0;
 
 vel_vagar = 0.5;
 
+// ==================================================
+// VIDA
+// ==================================================
+
+vida_max = 5;
+
+vida = vida_max;
+
+
+// ==================================================
+// DANO
+// ==================================================
+
+dano_salto = 1;
+
+
+// A slime pode acertar o player
+// apenas uma vez por salto.
+
+player_atingido_salto = false;
+
+
+// ==================================================
+// KNOCKBACK
+// ==================================================
+
+knockback_h = 0;
+knockback_v = 0;
+
+knockback_friccao = 0.20;
+
+
+// ==================================================
+// HIT FLASH
+// ==================================================
+
+tempo_hit_flash = 6;
+
+timer_hit_flash = 0;
 
 // ==================================================
 // ÁREA DA SLIME
@@ -168,6 +207,8 @@ escolher_destino = function()
 
 preparar_salto = function()
 {
+    player_atingido_salto = false;
+    
     // Guarda onde o salto começou
     salto_inicio_x = x;
     salto_inicio_y = y;
@@ -254,6 +295,72 @@ preparar_salto = function()
     estado = InimigoEstados.preparando;
 }
 
+// ==================================================
+// RECEBER DANO
+// ==================================================
+
+receber_dano = function(
+    _dano,
+    _origem_x,
+    _origem_y,
+    _forca_knockback
+)
+{
+    // ----------------------------------------------
+    // VIDA
+    // ----------------------------------------------
+
+    vida -= _dano;
+
+    vida = max(
+        vida,
+        0
+    );
+
+
+    // ----------------------------------------------
+    // HIT FLASH
+    // ----------------------------------------------
+
+    timer_hit_flash =
+        tempo_hit_flash;
+
+
+    // ----------------------------------------------
+    // DIREÇÃO DO KNOCKBACK
+    // ----------------------------------------------
+
+    var direcao_knockback =
+        point_direction(
+            _origem_x,
+            _origem_y,
+            x,
+            y
+        );
+
+
+    knockback_h =
+        lengthdir_x(
+            _forca_knockback,
+            direcao_knockback
+        );
+
+    knockback_v =
+        lengthdir_y(
+            _forca_knockback,
+            direcao_knockback
+        );
+
+
+    // ----------------------------------------------
+    // MORTE
+    // ----------------------------------------------
+
+    if (vida <= 0)
+    {
+        instance_destroy();
+    }
+}
 
 // ==================================================
 // MÁQUINA DE ESTADOS

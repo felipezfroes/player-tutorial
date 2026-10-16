@@ -23,6 +23,27 @@ distancia_hitbox = 18;
 hitbox_ataque = noone;
 hitbox_criada = false;
 
+// ==================================================
+// COMBATE
+// ==================================================
+
+dano_ataque = 1;
+
+forca_knockback = 4;
+
+
+// ==================================================
+// VIDA
+// ==================================================
+
+vida_max = 5;
+vida = vida_max;
+
+
+// Feedback visual quando recebe dano
+tempo_piscando = 30;
+timer_piscando = 0;
+
 enum PlayerEstados
 {
     parado,
@@ -102,7 +123,39 @@ criar_hitbox_ataque = function ()
     
     hitbox_ataque = instance_create_layer(hitbox_x, hitbox_y, layer, obj_player_hitbox);
     
-    hitbox_ataque.dono = id;
+    hitbox_ataque.dano = dano_ataque;
+
+    hitbox_ataque.forca_knockback = forca_knockback;
+}
+
+// ==================================================
+// RECEBER DANO
+// ==================================================
+
+receber_dano = function(_dano)
+{
+    // Evita valores inválidos
+    if (_dano <= 0)
+    {
+        return;
+    }
+
+
+    vida -= _dano;
+
+    vida = max(
+        vida,
+        0
+    );
+
+
+    // Inicia o efeito visual
+    timer_piscando =
+        tempo_piscando;
+
+
+    // Por enquanto não teremos
+    // sistema de morte do player.
 }
 
 maquina_estados = function() 
